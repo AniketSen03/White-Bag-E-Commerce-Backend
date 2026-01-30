@@ -13,7 +13,13 @@ const contactRouter = require("./contact");
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    "https://white-bag.vercel.app/"
+  ],
+  credentials: true
+}));
+
 app.use(express.json());
 
 app.use("/signup", signupRouter);
