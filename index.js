@@ -14,9 +14,7 @@ const contactRouter = require("./contact");
 const app = express();
 
 app.use(cors({
-  origin: [
-    "https://white-bag.vercel.app"
-  ],
+  origin: "https://white-bag.vercel.app",
   credentials: true
 }));
 
@@ -32,23 +30,17 @@ app.get("/", (req, res) => {
   res.send("Backend working");
 });
 
-// ✅ MongoDB Atlas connection
+// 🔥 IMPORTANT — MongoDB (serverless safe)
 let isConnected = false;
 
 async function connectDB() {
   if (isConnected) return;
-
-  try {
-    await mongoose.connect(process.env.MONGO_URI);
-    isConnected = true;
-    console.log("MongoDB Connected");
-  } catch (err) {
-    console.error("Mongo error:", err);
-  }
+  await mongoose.connect(process.env.MONGO_URI);
+  isConnected = true;
 }
 
-// ✅ Vercel handler
-connectDB();
-
-module.exports = app;
-
+// 🔥 VERCEL HANDLER (THIS IS THE KEY)
+module.exports = async (req, res) => {
+  await connectDB();
+  return app(req, res);
+};
