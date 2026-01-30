@@ -15,7 +15,7 @@ const app = express();
 
 app.use(cors({
   origin: [
-    "https://white-bag.vercel.app/"
+    "https://white-bag.vercel.app"
   ],
   credentials: true
 }));
