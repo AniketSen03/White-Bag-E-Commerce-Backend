@@ -48,7 +48,7 @@ async function connectDB() {
 }
 
 // ✅ Vercel handler
-module.exports = async (req, res) => {
-  await connectDB();
-  app(req, res);
-};
+connectDB();
+
+module.exports = app;
+
